@@ -1,1 +1,36 @@
+package de.tum.cit.fop;
+
+public class Section {
+    private final String sectionName;
+    private final Shelf[] shelfArray;
+
+    public Section(String sectionName) {
+        this.sectionName = sectionName;
+        this.shelfArray = new Shelf[5]; // max 5 shelves per section
+    }
+
+    public boolean addToShelf(Book newBook) {
+        for (int i = 0; i < shelfArray.length; i++) {
+            if (shelfArray[i] == null) {
+                shelfArray[i] = new Shelf(this);
+                return shelfArray[i].addBook(newBook);
+            } else if (!shelfArray[i].isUtilized()) {
+                return shelfArray[i].addBook(newBook);
+            }
+        }
+        return false; // all shelves full
+    }
+
+    public String getSectionName() { return sectionName; }
+    public Shelf[] getShelfArray() { return shelfArray; }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(sectionName + ":\n");
+        for (Shelf shelf : shelfArray) {
+            if (shelf != null) sb.append(shelf.toString()).append("\n");
+        }
+        return sb.toString();
+    }
+}
 
