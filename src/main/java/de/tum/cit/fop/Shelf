@@ -1,1 +1,45 @@
+package de.tum.cit.fop;
+
+import java.util.Arrays;
+
+public class Shelf {
+    private final Section section;
+    private final Book[] bookArray;
+
+    public Shelf(Section section) {
+        this.section = section;
+        this.bookArray = new Book[15]; // max 15 books per shelf
+    }
+
+    public boolean isUtilized() {
+        for (Book book : bookArray) {
+            if (book == null) return false;
+        }
+        return true;
+    }
+
+    public boolean addBook(Book newBook) {
+        for (int i = 0; i < bookArray.length; i++) {
+            if (bookArray[i] == null) {
+                bookArray[i] = newBook;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Section getSection() { return section; }
+    public Book[] getBookArray() { return bookArray; }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("Shelf: ");
+        for (Book book : bookArray) {
+            if (book != null) {
+                sb.append(book.toString()).append(", ");
+            }
+        }
+        return sb.toString();
+    }
+}
 
