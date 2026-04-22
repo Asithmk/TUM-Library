@@ -1,3 +1,7 @@
+## 📅 Project Information
+- Originally completed: November 6, 2025
+- Uploaded to GitHub: April 2026
+
 # 📚 TUM Library Management System
 
 This project is a simple object-oriented library management system developed as part of a university assignment at the Technical University of Munich (TUM).
