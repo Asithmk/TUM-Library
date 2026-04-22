@@ -1,1 +1,72 @@
+package de.tum.cit.fop;
+
+import java.util.Arrays;
+
+public class TUMLibrary {
+    private String name;
+    private final Section[] sectionArray;
+
+    public TUMLibrary(String name) {
+        this.name = name;
+        this.sectionArray = new Section[5]; // max 5 sections
+    }
+
+    public void addSection(Section newSection) {
+        for (int i = 0; i < sectionArray.length; i++) {
+            if (sectionArray[i] == null) {
+                sectionArray[i] = newSection;
+                return;
+            }
+        }
+    }
+
+    public boolean validateNewBook(Book newBook) {
+        for (Section section : sectionArray) {
+            if (section != null && section.getSectionName().equalsIgnoreCase(newBook.getGenre())) {
+                // Check duplicate IDs
+                for (Shelf shelf : section.getShelfArray()) {
+                    if (shelf != null) {
+                        for (Book b : shelf.getBookArray()) {
+                            if (b != null && b.getId() == newBook.getId()) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return section.addToShelf(newBook);
+            }
+        }
+        return false; // no matching section
+    }
+
+    public void sort() {
+        for (Section section : sectionArray) {
+            if (section != null) {
+                for (Shelf shelf : section.getShelfArray()) {
+                    if (shelf != null) {
+                        Arrays.sort(shelf.getBookArray(), (b1, b2) -> {
+                            if (b1 == null && b2 == null) return 0;
+                            if (b1 == null) return 1;
+                            if (b2 == null) return -1;
+                            return b1.getTitle().compareToIgnoreCase(b2.getTitle());
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public Section[] getSectionArray() { return sectionArray; }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(name + ":\n");
+        for (Section section : sectionArray) {
+            if (section != null) sb.append(section.toString()).append("\n");
+        }
+        return sb.toString();
+    }
+}
 
